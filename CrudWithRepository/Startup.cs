@@ -10,6 +10,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using CrudWithRepository.Models;
+using CrudWithRepository.Models.Repository.Interface;
+using CrudWithRepository.Models.Repository.Services;
 
 namespace CrudWithRepository
 {
@@ -29,6 +31,8 @@ namespace CrudWithRepository
             services.AddDbContext<ApplicationDbContext>(options => {
                 options.UseSqlServer(Configuration.GetConnectionString("conn"));
             });
+            // Inject Services
+            services.AddTransient<IClient, Clientservices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,7 +59,7 @@ namespace CrudWithRepository
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Client}/{action=Index}/{id?}");
             });
         }
     }
